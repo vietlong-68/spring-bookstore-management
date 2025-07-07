@@ -39,5 +39,5 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user")
-    private List<Order> users;
+    private List<Order> orders;
 }
