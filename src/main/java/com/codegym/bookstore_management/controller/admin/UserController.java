@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Optional;
 import com.codegym.bookstore_management.model.Role;
 import com.codegym.bookstore_management.service.UploadService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Controller
 @RequestMapping("/admin/users")
@@ -17,11 +18,14 @@ public class UserController {
     private final UserService userService;
     private final RoleService roleService;
     private final UploadService uploadService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, RoleService roleService, UploadService uploadService) {
+    public UserController(UserService userService, RoleService roleService, UploadService uploadService,
+            PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
         this.uploadService = uploadService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -54,6 +58,10 @@ public class UserController {
             @RequestParam(value = "avatarFile", required = false) MultipartFile avatarFile) {
         Role role = roleService.findById(roleId).orElseThrow();
         user.setRole(role);
+
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
 
         if (avatarFile != null && !avatarFile.isEmpty()) {
             String avatarWebPath = uploadService.uploadFile(avatarFile, "avatar");
