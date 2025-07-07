@@ -14,7 +14,11 @@
         <tr><th>Họ tên</th><td th:text="${user.fullName}"></td></tr>
         <tr><th>Địa chỉ</th><td th:text="${user.address}"></td></tr>
         <tr><th>Điện thoại</th><td th:text="${user.phone}"></td></tr>
-        <tr><th>Avatar</th><td th:text="${user.avatar}"></td></tr>
+        <tr><th>Avatar</th><td>
+            <img th:if="${user.avatar != null}" th:src="${user.avatar}" 
+                alt="Avatar" style="max-width: 200px; max-height: 200px; border-radius: 8px;">
+            <span th:if="${user.avatar == null}">Chưa có avatar</span>
+        </td></tr>
         <tr><th>Vai trò</th><td th:text="${user.role != null ? user.role.name : 'N/A'}"></td></tr>
     </table>
     <a th:href="@{/admin/users}" class="btn btn-secondary">Quay lại</a>
