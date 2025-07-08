@@ -1,27 +1,26 @@
 package com.codegym.bookstore_management.controller.client;
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.codegym.bookstore_management.model.Product;
 import com.codegym.bookstore_management.service.ProductService;
 
 @Controller
-public class HomePageController {
-
+public class ProductController2 {
     private final ProductService productService;
 
-    public HomePageController(ProductService productService) {
+    public ProductController2(ProductService productService) {
         this.productService = productService;
     }
 
-    @GetMapping("/")
-    public String showHomePage(Model model) {
-        List<Product> products = productService.findAll();
-        model.addAttribute("products", products);
-        return "client/homepage/show";
+    @GetMapping("/product/{id}")
+    public String getMethodName(@PathVariable Long id, Model model) {
+        Product product = productService.findById(id);
+        model.addAttribute("product", product);
+        return "client/product/detail";
     }
+
 }
