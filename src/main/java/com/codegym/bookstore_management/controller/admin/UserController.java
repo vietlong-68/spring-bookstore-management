@@ -2,9 +2,13 @@ package com.codegym.bookstore_management.controller.admin;
 
 import com.codegym.bookstore_management.model.User;
 import com.codegym.bookstore_management.service.UserService;
+
+import jakarta.validation.Valid;
+
 import com.codegym.bookstore_management.service.RoleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.Optional;
@@ -54,8 +58,17 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String saveUser(@ModelAttribute("user") User user, @RequestParam("role.id") Long roleId,
-            @RequestParam(value = "avatarFile", required = false) MultipartFile avatarFile) {
+    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
+            @RequestParam("role.id") Long roleId,
+            @RequestParam(value = "avatarFile", required = false) MultipartFile avatarFile,
+            Model model) {
+
+        model.addAttribute("roles", roleService.findAll());
+
+        if (bindingResult.hasErrors()) {
+            return "admin/user/form";
+        }
+
         Role role = roleService.findById(roleId).orElseThrow();
         user.setRole(role);
 

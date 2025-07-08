@@ -2,6 +2,7 @@ package com.codegym.bookstore_management.controller.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.codegym.bookstore_management.model.Product;
 import com.codegym.bookstore_management.service.ProductService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/admin/products")
@@ -39,8 +42,12 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    public String saveProduct(@ModelAttribute("product") Product product,
+    public String saveProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult,
             @RequestParam(value = "productImage", required = false) MultipartFile productImage) {
+
+        if (bindingResult.hasErrors()) {
+            return "admin/product/form";
+        }
 
         if (productImage != null && !productImage.isEmpty()) {
             String productImageWebPath = uploadService.uploadFile(productImage, "productImage");
