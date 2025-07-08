@@ -14,6 +14,8 @@ import com.codegym.bookstore_management.service.RoleService;
 import com.codegym.bookstore_management.service.UploadService;
 import com.codegym.bookstore_management.service.UserService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -41,7 +43,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String handleRegister(@ModelAttribute("user") RegisterDTO userRegisterDTO, BindingResult bindingResult) {
+    public String handleRegister(@ModelAttribute("user") @Valid RegisterDTO userRegisterDTO,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "client/auth/register";
         }
@@ -51,7 +54,7 @@ public class AuthController {
         user.setPassword(encodedPassword);
         user.setRole(roleService.findById(2L).get());
         userService.saveUser(user);
-        return "client/auth/register";
+        return "redirect:/login";
     }
 
 }

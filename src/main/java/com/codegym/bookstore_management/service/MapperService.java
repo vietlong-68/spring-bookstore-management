@@ -1,11 +1,11 @@
 package com.codegym.bookstore_management.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.codegym.bookstore_management.model.User;
 import com.codegym.bookstore_management.model.dto.RegisterDTO;
 
-@Component
+@Service
 public class MapperService {
     public User registerDTOToUser(RegisterDTO registerDTO) {
         User user = new User();

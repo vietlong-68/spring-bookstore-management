@@ -1,5 +1,8 @@
 package com.codegym.bookstore_management.model.dto;
 
+import com.codegym.bookstore_management.service.validator.PasswordMatches;
+import com.codegym.bookstore_management.service.validator.UniqueEmail;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -11,10 +14,12 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@PasswordMatches(message = "Mật khẩu xác nhận không khớp")
 public class RegisterDTO {
 
     @NotBlank(message = "Email không được để trống")
     @Email(message = "Email không hợp lệ")
+    @UniqueEmail(message = "Email đã được sử dụng")
     private String email;
 
     @NotBlank(message = "Mật khẩu không được để trống")

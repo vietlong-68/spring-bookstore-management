@@ -33,6 +33,14 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    public boolean checkEmailExists(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            return true;
+        }
+        return false;
+    }
+
     public User authenticateUser(String email, String password) {
         User user = userRepository.findByEmail(email);
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {

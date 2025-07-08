@@ -2,6 +2,8 @@ package com.codegym.bookstore_management.model;
 
 import java.util.List;
 
+import com.codegym.bookstore_management.service.validator.UniqueEmail;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,6 +36,7 @@ public class User {
 
     @NotBlank(message = "Email không được để trống")
     @Email(message = "Email không đúng định dạng")
+    @UniqueEmail(message = "Email đã được sử dụng")
     @Size(max = 100, message = "Email không được vượt quá 100 ký tự")
     private String email;
 
