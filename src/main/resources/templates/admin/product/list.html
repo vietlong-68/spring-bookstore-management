@@ -19,7 +19,6 @@
                     <th>Giá</th>
                     <th>Ảnh</th>
                     <th>Mô tả ngắn</th>
-                    <th>Mô tả chi tiết</th>
                     <th>Số lượng</th>
                     <th>Đã bán</th>
                     <th>Tác giả</th>
@@ -41,17 +40,17 @@
                         <span th:if="${product.image == null}" class="text-muted">No image</span>
                     </td>
                     <td th:text="${#strings.abbreviate(product.shortDesc, 30)}"></td>
-                    <td th:text="${#strings.abbreviate(product.detailDesc, 30)}"></td>
                     <td th:text="${product.quantity}"></td>
                     <td th:text="${product.sold}"></td>
                     <td th:text="${product.author}"></td>
                     <td th:text="${product.genre}"></td>
                     <td>
-                        <a th:href="@{'/admin/products/detail/' + ${product.id}}" class="btn btn-info btn-sm">Chi
-                            tiết</a>
-                        <a th:href="@{'/admin/products/edit/' + ${product.id}}" class="btn btn-warning btn-sm">Sửa</a>
-                        <a th:href="@{'/admin/products/delete/' + ${product.id}}" class="btn btn-danger btn-sm"
-                            onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+                        <div class="d-flex flex-column gap-1">
+                            <a th:href="@{'/admin/products/detail/' + ${product.id}}" class="btn btn-info btn-sm">Chi tiết</a>
+                            <a th:href="@{'/admin/products/edit/' + ${product.id}}" class="btn btn-warning btn-sm">Sửa</a>
+                            <a th:href="@{'/admin/products/delete/' + ${product.id}}" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+                        </div>
                     </td>
                 </tr>
             </tbody>
