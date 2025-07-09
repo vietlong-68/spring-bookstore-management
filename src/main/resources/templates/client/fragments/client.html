@@ -3,7 +3,7 @@
     <body>
         <nav th:fragment="clientHeader" class="sticky-header navbar navbar-expand-lg navbar-dark bg-dark py-3 shadow-sm">
             <div class="container-fluid">
-                <a class="navbar-brand fs-4" th:href="@{/}">Nhà Sách ABC</a>
+                <a class="navbar-brand fs-4" th:href="@{/}">Nhà Sách L</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -13,53 +13,47 @@
                         <li class="nav-item">
                             <a class="nav-link active fs-5" th:href="@{/}">Trang Chủ</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link fs-5" href="#">Sản Phẩm</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fs-5" href="#">Liên Hệ</a>
-                        </li>
                     </ul>
                     <div class="d-flex align-items-center">
-                        <div th:if="${currentUser != null}" class="d-flex align-items-center">
+                        <div th:if="${session.currentUser != null}" class="d-flex align-items-center">
                             <a th:href="@{/cart}" class="nav-link text-white position-relative me-3">
-                            <i class="bi bi-cart fs-4"></i>
-                            <span th:if="${cartItemCount != null and cartItemCount > 0}"
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            <span th:text="${cartItemCount}"></span>
-                            <span class="visually-hidden">sản phẩm trong giỏ</span>
-                            </span>
+                                <i class="bi bi-cart fs-4"></i>
+                                <span th:if="${cartItemCount != null and cartItemCount > 0}"
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    <span th:text="${cartItemCount}"></span>
+                                    <span class="visually-hidden">sản phẩm trong giỏ</span>
+                                </span>
                             </a>
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle d-flex align-items-center text-white" href="#" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span th:text="${currentUser.fullName}" class="me-2"></span>
-                                <img th:if="${currentUser.avatar != null and !currentUser.avatar.isEmpty()}"
-                                    th:src="${currentUser.avatar}"
-                                    alt="User Avatar"
-                                    class="rounded-circle"
-                                    style="width: 32px; height: 32px; object-fit: cover;">
-                                <i th:unless="${currentUser.avatar != null and !currentUser.avatar.isEmpty()}" class="bi bi-person-circle fs-4"></i>
+                                    <span th:text="${session.currentUser.fullName}" class="me-2"></span>
+                                    <img th:if="${session.currentUser.avatar != null and !session.currentUser.avatar.isEmpty()}"
+                                        th:src="${session.currentUser.avatar}"
+                                        alt="User Avatar"
+                                        class="rounded-circle"
+                                        style="width: 32px; height: 32px; object-fit: cover;">
+                                    <i th:unless="${session.currentUser.avatar != null and !session.currentUser.avatar.isEmpty()}" class="bi bi-person-circle fs-4"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDropdownUser">
-                                    <li th:if="${currentUser.role != null and currentUser.role.name == 'ADMIN'}">
+                                    <li th:if="${session.currentUser.role != null and session.currentUser.role.name == 'ADMIN'}">
                                         <a class="dropdown-item d-flex align-items-center" th:href="@{/admin/users}">
-                                        <i class="bi bi-gear me-2"></i>
-                                        <span>Trang Quản lý</span>
+                                            <i class="bi bi-gear me-2"></i>
+                                            <span>Trang Quản lý</span>
                                         </a>
                                     </li>
-                                    <li th:if="${currentUser.role != null and currentUser.role.name == 'ADMIN'}">
+                                    <li th:if="${session.currentUser.role != null and session.currentUser.role.name == 'ADMIN'}">
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li>
                                         <a class="dropdown-item d-flex align-items-center" th:href="@{/profile}">
-                                        <i class="bi bi-person-vcard me-2"></i>
-                                        <span>Trang cá nhân</span>
+                                            <i class="bi bi-person-vcard me-2"></i>
+                                            <span>Trang cá nhân</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item d-flex align-items-center" th:href="@{/orders/history}">
-                                        <i class="bi bi-clock-history me-2"></i>
-                                        <span>Lịch sử mua hàng</span>
+                                            <i class="bi bi-clock-history me-2"></i>
+                                            <span>Lịch sử mua hàng</span>
                                         </a>
                                     </li>
                                     <li>
@@ -68,15 +62,15 @@
                                     <li>
                                         <form th:action="@{/logout}" method="post" class="d-inline w-100">
                                             <button type="submit" class="dropdown-item d-flex align-items-center">
-                                            <i class="bi bi-box-arrow-right me-2"></i>
-                                            <span>Đăng xuất</span>
+                                                <i class="bi bi-box-arrow-right me-2"></i>
+                                                <span>Đăng xuất</span>
                                             </button>
                                         </form>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <div th:if="${currentUser == null}" class="d-flex">
+                        <div th:if="${session.currentUser == null}" class="d-flex">
                             <a th:href="@{/login}" class="btn btn-outline-light me-2">Đăng nhập</a>
                             <a th:href="@{/register}" class="btn btn-warning">Đăng ký</a>
                         </div>

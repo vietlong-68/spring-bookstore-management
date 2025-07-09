@@ -22,16 +22,9 @@ public class HomePageController {
     }
 
     @GetMapping("/")
-    public String showHomePage(Model model, @AuthenticationPrincipal UserDetails currentUserD) {
+    public String showHomePage(Model model) {
         List<Product> products = productService.findAll();
         model.addAttribute("products", products);
-
-        boolean isCurrentUserExists = currentUserD != null;
-
-        if (isCurrentUserExists) {
-            User currentUser = somethingConverter.getCurrentUserFromUserDetails(currentUserD);
-            model.addAttribute("currentUser", currentUser);
-        }
 
         return "client/homepage/show";
     }
