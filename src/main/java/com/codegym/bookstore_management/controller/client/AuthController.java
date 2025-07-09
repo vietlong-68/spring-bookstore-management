@@ -57,4 +57,9 @@ public class AuthController {
         return "redirect:/login";
     }
 
+    @GetMapping("/login")
+    public String getLoginPage() {
+        return "client/auth/login";
+    }
+
 }

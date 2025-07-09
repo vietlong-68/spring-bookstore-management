@@ -16,7 +16,14 @@
                             <h3>Đăng Nhập</h3>
                         </div>
                         <div class="card-body">
-    
+                            <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                Đăng nhập thất bại. Vui lòng kiểm tra lại tên đăng nhập và mật khẩu.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
+                            </div>
+                            <div th:if="${param.logout}" class="alert alert-success alert-dismissible fade show" role="alert">
+                                Bạn đã đăng xuất thành công. Hẹn gặp lại bạn lần sau!
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
+                            </div>
                             <form th:action="@{/login}" method="post">
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Email / Tên đăng nhập:</label>
