@@ -36,7 +36,6 @@ public class User {
 
     @NotBlank(message = "Email không được để trống")
     @Email(message = "Email không đúng định dạng")
-    @UniqueEmail(message = "Email đã được sử dụng")
     @Size(max = 100, message = "Email không được vượt quá 100 ký tự")
     private String email;
 

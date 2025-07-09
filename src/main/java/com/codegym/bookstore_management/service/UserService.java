@@ -4,17 +4,14 @@ import com.codegym.bookstore_management.repository.UserRepository;
 import com.codegym.bookstore_management.model.User;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> findAllUsers() {
@@ -41,11 +38,7 @@ public class UserService {
         return false;
     }
 
-    public User authenticateUser(String email, String password) {
-        User user = userRepository.findByEmail(email);
-        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-            return user;
-        }
-        return null;
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
