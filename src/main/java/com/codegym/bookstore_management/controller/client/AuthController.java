@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.codegym.bookstore_management.model.User;
 import com.codegym.bookstore_management.model.dto.RegisterDTO;
-import com.codegym.bookstore_management.service.MapperService;
+import com.codegym.bookstore_management.service.SomethingConverter;
 import com.codegym.bookstore_management.service.RoleService;
 import com.codegym.bookstore_management.service.UploadService;
 import com.codegym.bookstore_management.service.UserService;
@@ -20,15 +20,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class AuthController {
-    private final MapperService mapperService;
+    private final SomethingConverter somethingConverter;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final RoleService roleService;
     private final UploadService uploadService;
 
-    public AuthController(MapperService mapperService, PasswordEncoder passwordEncoder, RoleService roleService,
+    public AuthController(SomethingConverter mapperService, PasswordEncoder passwordEncoder, RoleService roleService,
             UploadService uploadService, UserService userService) {
-        this.mapperService = mapperService;
+        this.somethingConverter = mapperService;
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
         this.uploadService = uploadService;
@@ -48,7 +48,7 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             return "client/auth/register";
         }
-        User user = mapperService.registerDTOToUser(userRegisterDTO);
+        User user = somethingConverter.registerDTOToUser(userRegisterDTO);
         String encodedPassword = passwordEncoder.encode(user.getPassword());
 
         user.setPassword(encodedPassword);
