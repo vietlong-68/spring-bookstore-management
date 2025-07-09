@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.codegym.bookstore_management.service.UserService;
 
-@Component
+
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
