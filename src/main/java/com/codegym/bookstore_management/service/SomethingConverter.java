@@ -5,15 +5,18 @@ import org.springframework.stereotype.Service;
 
 import com.codegym.bookstore_management.model.User;
 import com.codegym.bookstore_management.model.UserS;
+import com.codegym.bookstore_management.model.Role;
 import com.codegym.bookstore_management.model.dto.RegisterDTO;
 
 @Service
 public class SomethingConverter {
 
     private final UserService userService;
+    private final RoleService roleService;
 
-    public SomethingConverter(UserService userService) {
+    public SomethingConverter(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     public User registerDTOToUser(RegisterDTO registerDTO) {
@@ -43,7 +46,7 @@ public class SomethingConverter {
         UserS userS = new UserS();
         userS.setId(user.getId());
         userS.setEmail(user.getEmail());
-        userS.setPassword(user.getPassword()); 
+        userS.setPassword(user.getPassword());
         userS.setFullName(user.getFullName());
         userS.setAddress(user.getAddress());
         userS.setPhone(user.getPhone());
@@ -52,5 +55,24 @@ public class SomethingConverter {
             userS.setRoleId(user.getRole().getId());
         }
         return userS;
+    }
+
+    public User userStoUser(UserS userS) {
+        if (userS == null) {
+            return null;
+        }
+        User user = new User();
+        user.setId(userS.getId());
+        user.setEmail(userS.getEmail());
+        user.setPassword(userS.getPassword());
+        user.setFullName(userS.getFullName());
+        user.setAddress(userS.getAddress());
+        user.setPhone(userS.getPhone());
+        user.setAvatar(userS.getAvatar());
+        if (userS.getRoleId() != null) {
+            Role role = roleService.findById(userS.getRoleId()).orElse(null);
+            user.setRole(role);
+        }
+        return user;
     }
 }

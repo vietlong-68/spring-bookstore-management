@@ -35,13 +35,21 @@
                                 <p class="card-text text-muted mb-2" th:text="${'Tác giả: ' + product.author}">Tên tác giả</p>
                                 <p class="card-text" th:text="${product.shortDesc}">Mô tả ngắn về sản phẩm sẽ được hiển thị ở đây.</p>
                             </div>
-                            <div class="card-footer p-3">
+                            <div class="card-footer p-3 text-center">
                                 <h5 class="text-danger fw-bold">
                                     <span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                                 </h5>
-                                <div class="d-grid gap-2">
-                                    <a href="#" class="btn btn-primary">Thêm vào giỏ</a>
-                                    <a th:href="@{/product/{id}(id=${product.id})}" class="btn btn-outline-secondary">Xem chi tiết</a>
+                                <div class="row g-2 justify-content-center">
+                                    <div class="col-12 col-lg-6">
+                                        <form th:action="@{/cart/add}" method="post" th:object="${product}">
+                                            <input type="hidden" th:name="productId" th:value="${product.id}" />
+                                            <input type="hidden" th:name="quantity" th:value="1" />
+                                            <button type="submit" class="btn btn-primary w-100">Thêm vào giỏ</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <a th:href="@{/product/{id}(id=${product.id})}" class="btn btn-outline-secondary w-100">Xem chi tiết</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
