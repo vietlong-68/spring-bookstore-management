@@ -27,6 +27,10 @@ public class CartService {
         this.productService = productService;
     }
 
+    public Cart findByUser(User user) {
+        return cartRepository.findByUser(user);
+    }
+
     public void HandleAddProductToCart(Long productId, User user, Integer quantity) {
         Cart cart = cartRepository.findByUser(user);
         if (cart == null) {

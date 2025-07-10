@@ -15,8 +15,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -37,6 +37,6 @@ public class Cart {
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<CartDetail> cartDetails = new HashSet<>();
+    private List<CartDetail> cartDetails = new ArrayList<>();
 
 }
