@@ -25,6 +25,10 @@
                                 Bạn đã đăng xuất thành công. Hẹn gặp lại bạn lần sau!
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
                             </div>
+                            <div th:if="${param.register}" class="alert alert-success alert-dismissible fade show" role="alert">
+                                Đăng ký thành công. Vui lòng đăng nhập để tiếp tục.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
+                            </div>
                             <form th:action="@{/login}" method="post">
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Email / Tên đăng nhập:</label>

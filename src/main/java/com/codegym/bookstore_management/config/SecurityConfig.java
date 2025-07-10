@@ -69,7 +69,6 @@ public class SecurityConfig {
                 .rememberMe(rememberMe -> rememberMe.rememberMeServices(rememberMeServices()))
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
                         .failureUrl("/login?error")
                         .successHandler(customSuccessHandleAuthenticationSuccessHandler)
                         .permitAll())

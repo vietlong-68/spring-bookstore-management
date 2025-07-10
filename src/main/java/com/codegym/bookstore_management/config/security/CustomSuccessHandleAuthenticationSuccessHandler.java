@@ -8,6 +8,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import com.codegym.bookstore_management.model.User;
+import com.codegym.bookstore_management.model.UserS;
 import com.codegym.bookstore_management.service.SomethingConverter;
 
 import jakarta.servlet.ServletException;
@@ -29,9 +30,15 @@ public class CustomSuccessHandleAuthenticationSuccessHandler implements Authenti
             Authentication authentication) throws IOException, ServletException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = somethingConverter.getCurrentUserFromUserDetails(userDetails);
+        UserS userS = SomethingConverter.UsertoUserS(user);
 
         HttpSession session = request.getSession();
-        session.setAttribute("currentUser", user);
+        session.setAttribute("currentUser", userS);
+        if (userS.getRoleId() == 1) {
+            response.sendRedirect("/admin/users");
+        } else {
+            response.sendRedirect("/");
+        }
     }
 
 }

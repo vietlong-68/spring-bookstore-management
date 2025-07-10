@@ -54,7 +54,7 @@ public class AuthController {
         user.setPassword(encodedPassword);
         user.setRole(roleService.findById(2L).get());
         userService.saveUser(user);
-        return "redirect:/login";
+        return "redirect:/login?register";
     }
 
     @GetMapping("/login")
