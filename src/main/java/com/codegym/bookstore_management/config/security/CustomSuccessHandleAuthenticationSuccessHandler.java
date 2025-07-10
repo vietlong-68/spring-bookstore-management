@@ -35,7 +35,7 @@ public class CustomSuccessHandleAuthenticationSuccessHandler implements Authenti
         HttpSession session = request.getSession();
         session.setAttribute("currentUser", userS);
         if (userS.getRoleId() == 1) {
-            response.sendRedirect("/admin/users");
+            response.sendRedirect("/admin/dashboard");
         } else {
             response.sendRedirect("/");
         }
