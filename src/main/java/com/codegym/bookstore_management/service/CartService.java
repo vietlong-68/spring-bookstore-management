@@ -1,8 +1,8 @@
 package com.codegym.bookstore_management.service;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.codegym.bookstore_management.model.Cart;
 import com.codegym.bookstore_management.model.CartDetail;
 import com.codegym.bookstore_management.model.Product;
@@ -13,7 +13,6 @@ import com.codegym.bookstore_management.repository.CartDetailRepository;
 
 @Service
 public class CartService {
-
     private final CartRepository cartRepository;
     private CartDetailRepository cartDetailRepository;
     private ProductService productService;
@@ -38,7 +37,6 @@ public class CartService {
             cart.setUser(user);
             cartRepository.save(cart);
         }
-
         CartDetail cartDetail = new CartDetail();
         cartDetail.setCart(cart);
         cartDetail.setProductId(productId);
@@ -46,5 +44,23 @@ public class CartService {
         Double price = productService.findById(productId).getPrice();
         cartDetail.setPrice(price);
         cartDetailRepository.save(cartDetail);
+    }
+
+    public void removeFromCart(Long cartDetailId, User user) {
+        Cart cart = cartRepository.findByUser(user);
+        if (cart != null) {
+            List<CartDetail> cartDetails = cart.getCartDetails();
+            CartDetail toRemove = null;
+            for (CartDetail detail : cartDetails) {
+                if (detail.getId().equals(cartDetailId)) {
+                    toRemove = detail;
+                    break;
+                }
+            }
+            if (toRemove != null) {
+                cartDetails.remove(toRemove);
+                cartRepository.save(cart);
+            }
+        }
     }
 }

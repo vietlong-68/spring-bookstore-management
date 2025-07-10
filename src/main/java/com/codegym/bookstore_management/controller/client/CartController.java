@@ -85,4 +85,14 @@ public class CartController {
         model.addAttribute("productMap", productMap);
         return "client/cart/show";
     }
+
+    @PostMapping("/remove")
+    public String removeFromCart(@RequestParam("cartDetailId") Long cartDetailId, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserS userS = (UserS) session.getAttribute("currentUser");
+        User user = somethingConverter.userStoUser(userS);
+        
+        cartService.removeFromCart(cartDetailId, user);
+        return "redirect:/cart/show";
+    }
 }
