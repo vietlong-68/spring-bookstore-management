@@ -36,7 +36,6 @@ public class CartService {
         if (cart == null) {
             cart = new Cart();
             cart.setUser(user);
-            cart.setSum(1);
             cartRepository.save(cart);
         }
 
