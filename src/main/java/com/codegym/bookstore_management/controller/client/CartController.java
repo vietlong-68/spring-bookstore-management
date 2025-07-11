@@ -41,7 +41,7 @@ public class CartController {
         UserS userS = (UserS) session.getAttribute("currentUser");
         User user = somethingConverter.userStoUser(userS);
         cartService.HandleAddProductToCart(productId, user, quantity);
-        return "redirect:/";
+        return "redirect:/cart/show";
     }
 
     @GetMapping("/show")
