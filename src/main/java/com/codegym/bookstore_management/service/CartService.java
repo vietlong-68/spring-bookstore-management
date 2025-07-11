@@ -37,13 +37,21 @@ public class CartService {
             cart.setUser(user);
             cartRepository.save(cart);
         }
-        CartDetail cartDetail = new CartDetail();
-        cartDetail.setCart(cart);
-        cartDetail.setProductId(productId);
-        cartDetail.setQuantity(quantity);
-        Double price = productService.findById(productId).getPrice();
-        cartDetail.setPrice(price);
-        cartDetailRepository.save(cartDetail);
+        CartDetail existingDetail = cartDetailRepository.findByCartAndProductId(cart.getId(), productId);
+        if (existingDetail != null) {
+            existingDetail.setQuantity(existingDetail.getQuantity() + quantity);
+            Double latestPrice = productService.findById(productId).getPrice();
+            existingDetail.setPrice(latestPrice);
+            cartDetailRepository.save(existingDetail);
+        } else {
+            CartDetail cartDetail = new CartDetail();
+            cartDetail.setCart(cart);
+            cartDetail.setProductId(productId);
+            cartDetail.setQuantity(quantity);
+            Double price = productService.findById(productId).getPrice();
+            cartDetail.setPrice(price);
+            cartDetailRepository.save(cartDetail);
+        }
     }
 
     public void removeFromCart(Long cartDetailId, User user) {
