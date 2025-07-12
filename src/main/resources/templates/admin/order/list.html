@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách đơn hàng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+    <div th:replace="admin/fragments/admin :: admin-sidebar"></div>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">Danh sách đơn hàng</h2>
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Khách hàng</th>
+                    <th>Người nhận</th>
+                    <th>Điện thoại</th>
+                    <th>Địa chỉ</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${orders == null or #lists.isEmpty(orders)}">
+                    <td colspan="8" class="text-center">Không có đơn hàng nào.</td>
+                </tr>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order != null and order.id != null} ? ${order.id} : 'N/A'"></td>
+                    <td>
+                        <div th:if="${order != null and order.user != null}">
+                            <div th:text="${order.user.fullName != null} ? ${order.user.fullName} : 'Không tên'"></div>
+                            <small class="text-muted"
+                                th:text="${order.user.email != null} ? ${order.user.email} : 'Không có email'"></small>
+                        </div>
+                        <span th:unless="${order != null and order.user != null}" class="text-muted">Không có thông tin
+                            khách hàng</span>
+                    </td>
+                    <td th:text="${order != null and order.receiverName != null} ? ${order.receiverName} : 'N/A'"></td>
+                    <td th:text="${order != null and order.receiverPhone != null} ? ${order.receiverPhone} : 'N/A'">
+                    </td>
+                    <td th:text="${order != null and order.receiverAddress != null} ? ${order.receiverAddress} : 'N/A'">
+                    </td>
+                    <td>
+                        <span class="fw-bold text-success"
+                            th:text="${order != null and order.totalPrice != null} ? ${#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 0, 'POINT') + ' VNĐ'} : '0 VNĐ'"></span>
+                    </td>
+                    <td>
+                        <span th:if="${order != null and order.status != null}" th:class="${'badge ' + (order.status == 'PENDING' ? 'bg-warning' : 
+                                                   order.status == 'CONFIRMED' ? 'bg-info' : 
+                                                   order.status == 'SHIPPED' ? 'bg-primary' : 
+                                                   order.status == 'DELIVERED' ? 'bg-success' : 
+                                                   order.status == 'CANCELLED' ? 'bg-danger' : 'bg-secondary')}"
+                            th:text="${order.status}"></span>
+                        <span th:unless="${order != null and order.status != null}">Không xác định</span>
+                    </td>
+                    <td>
+                        <div th:if="${order != null and order.id != null}">
+                            <a th:href="@{'/admin/orders/detail/' + ${order.id}}" class="btn btn-info btn-sm">Chi
+                                tiết</a>
+                            <a th:href="@{'/admin/orders/edit/' + ${order.id}}" class="btn btn-warning btn-sm">Sửa</a>
+                            <a th:href="@{'/admin/orders/delete/' + ${order.id}}" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Xác nhận xóa?')">Xóa</a>
+                        </div>
+                        <span th:unless="${order != null and order.id != null}">Không có hành động</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

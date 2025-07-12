@@ -2,6 +2,7 @@ package com.codegym.bookstore_management.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Handler;
 
 import org.springframework.stereotype.Service;
@@ -38,6 +39,10 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
+    public Order saveOrder(Order order) {
+        return orderRepository.save(order);
+    }
+
     public void handleOrder(Cart cart, String receiverAddress, String receiverPhone, String receiverName) {
         Order order = new Order();
         order.setReceiverAddress(receiverAddress);
@@ -63,6 +68,14 @@ public class OrderService {
 
     public List<Order> findOrderByUser(User user) {
         return orderRepository.findByUser(user);
+    }
+
+    public List<Order> findAllOrders() {
+        return orderRepository.findAll();
+    }
+
+    public Optional<Order> findOrderById(Long id) {
+        return orderRepository.findById(id);
     }
 
 }

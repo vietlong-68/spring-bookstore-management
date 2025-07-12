@@ -1,90 +1,87 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <title>Chỉnh sửa hồ sơ</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
+
 <body>
-<div class="container mt-5">
-    <h2 class="mb-4">Chỉnh sửa hồ sơ</h2>
+    <div class="container mt-5">
+        <h2 class="mb-4">Chỉnh sửa hồ sơ</h2>
 
-    <form th:action="@{/profile/update}" method="post" th:object="${user}" enctype="multipart/form-data">
-        <!-- Email -->
-        <div class="mb-3">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" th:field="*{email}" id="email" class="form-control"
-                   th:classappend="${#fields.hasErrors('email')}? 'is-invalid'">
-            <div class="invalid-feedback" th:errors="*{email}"></div>
-        </div>
+        <form th:action="@{/profile/update}" method="post" th:object="${user}" enctype="multipart/form-data">
 
-        <!-- Password -->
-        <div class="mb-3">
-            <label for="password" class="form-label">Mật khẩu mới (để trống nếu không đổi):</label>
-            <input type="password" th:field="*{password}" id="password" class="form-control"
-                   th:classappend="${#fields.hasErrors('password')}? 'is-invalid'">
-            <div class="invalid-feedback" th:errors="*{password}"></div>
-        </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" th:field="*{email}" id="email" class="form-control"
+                    th:classappend="${#fields.hasErrors('email')}? 'is-invalid'">
+                <div class="invalid-feedback" th:errors="*{email}"></div>
+            </div>
 
-        <!-- Full name -->
-        <div class="mb-3">
-            <label for="fullName" class="form-label">Họ tên:</label>
-            <input type="text" th:field="*{fullName}" id="fullName" class="form-control"
-                   th:classappend="${#fields.hasErrors('fullName')}? 'is-invalid'">
-            <div class="invalid-feedback" th:errors="*{fullName}"></div>
-        </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Mật khẩu mới (để trống nếu không đổi):</label>
+                <input type="password" th:field="*{password}" id="password" class="form-control"
+                    th:classappend="${#fields.hasErrors('password')}? 'is-invalid'">
+                <div class="invalid-feedback" th:errors="*{password}"></div>
+            </div>
 
-        <!-- Address -->
-        <div class="mb-3">
-            <label for="address" class="form-label">Địa chỉ:</label>
-            <input type="text" th:field="*{address}" id="address" class="form-control"
-                   th:classappend="${#fields.hasErrors('address')}? 'is-invalid'">
-            <div class="invalid-feedback" th:errors="*{address}"></div>
-        </div>
+            <div class="mb-3">
+                <label for="fullName" class="form-label">Họ tên:</label>
+                <input type="text" th:field="*{fullName}" id="fullName" class="form-control"
+                    th:classappend="${#fields.hasErrors('fullName')}? 'is-invalid'">
+                <div class="invalid-feedback" th:errors="*{fullName}"></div>
+            </div>
 
-        <!-- Phone -->
-        <div class="mb-3">
-            <label for="phone" class="form-label">Số điện thoại:</label>
-            <input type="text" th:field="*{phone}" id="phone" class="form-control"
-                   th:classappend="${#fields.hasErrors('phone')}? 'is-invalid'">
-            <div class="invalid-feedback" th:errors="*{phone}"></div>
-        </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Địa chỉ:</label>
+                <input type="text" th:field="*{address}" id="address" class="form-control"
+                    th:classappend="${#fields.hasErrors('address')}? 'is-invalid'">
+                <div class="invalid-feedback" th:errors="*{address}"></div>
+            </div>
 
-        <!-- Avatar upload -->
-        <div class="mb-3">
-            <label for="avatarFile" class="form-label">Ảnh đại diện:</label>
-            <input type="file" name="avatarFile" id="avatarFile" class="form-control" accept="image/*">
-        </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Số điện thoại:</label>
+                <input type="text" th:field="*{phone}" id="phone" class="form-control"
+                    th:classappend="${#fields.hasErrors('phone')}? 'is-invalid'">
+                <div class="invalid-feedback" th:errors="*{phone}"></div>
+            </div>
 
-        <!-- Avatar preview -->
-        <div class="mb-3">
-            <label class="form-label">Ảnh hiện tại:</label><br>
-            <img id="avatarPreview" th:if="*{avatar != null}" th:src="@{${user.avatar}}" alt="avatar cũ"
-                 style="max-height: 150px;">
-        </div>
+            <div class="mb-3">
+                <label for="avatarFile" class="form-label">Ảnh đại diện:</label>
+                <input type="file" name="avatarFile" id="avatarFile" class="form-control" accept="image/*">
+            </div>
 
-        <div class="mb-3" style="display:none;" id="avatarPreviewWrapper">
-            <label class="form-label">Ảnh mới chọn:</label><br>
-            <img id="avatarPreviewNew" style="max-height: 150px;">
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Ảnh hiện tại:</label><br>
+                <img id="avatarPreview" th:if="*{avatar != null}" th:src="@{${user.avatar}}" alt="avatar cũ"
+                    style="max-height: 150px;">
+            </div>
 
-        <button type="submit" class="btn btn-primary">Cập nhật</button>
-    </form>
-</div>
+            <div class="mb-3" style="display:none;" id="avatarPreviewWrapper">
+                <label class="form-label">Ảnh mới chọn:</label><br>
+                <img id="avatarPreviewNew" style="max-height: 150px;">
+            </div>
 
-<script>
-    $(document).ready(function () {
-        $("#avatarFile").on("change", function (e) {
-            const file = e.target.files[0];
-            if (file && file.type.startsWith("image/")) {
-                const imgURL = URL.createObjectURL(file);
-                $("#avatarPreviewNew").attr("src", imgURL);
-                $("#avatarPreviewWrapper").show();
-                $("#avatarPreview").hide();
-            }
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#avatarFile").on("change", function (e) {
+                const file = e.target.files[0];
+                if (file && file.type.startsWith("image/")) {
+                    const imgURL = URL.createObjectURL(file);
+                    $("#avatarPreviewNew").attr("src", imgURL);
+                    $("#avatarPreviewWrapper").show();
+                    $("#avatarPreview").hide();
+                }
+            });
         });
-    });
-</script>
+    </script>
 </body>
+
 </html>
