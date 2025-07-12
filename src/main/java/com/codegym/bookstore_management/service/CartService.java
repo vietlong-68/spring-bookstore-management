@@ -71,4 +71,12 @@ public class CartService {
             }
         }
     }
+
+    public Double calculateTotalAmount(Cart cart) {
+        Double totalAmount = 0.0;
+        for (CartDetail detail : cart.getCartDetails()) {
+            totalAmount += detail.getPrice() * detail.getQuantity();
+        }
+        return totalAmount;
+    }
 }
