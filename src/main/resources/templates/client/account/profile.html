@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang cá nhân</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Trang cá nhân</li>
+        </ol>
+    </nav>
+    <h2 class="mb-4">Thông tin cá nhân</h2>
+    <div th:if="${user == null}" class="alert alert-warning">
+        Không tìm thấy thông tin người dùng.
+    </div>
+    <div th:if="${user != null}" class="card p-4 shadow-sm">
+        <div class="d-flex align-items-center mb-4">
+            <img th:src="${user.avatar != null} ? ${user.avatar} : @{/images/default-avatar.jpg}"
+                    alt="Avatar"
+                    class="rounded-circle me-4"
+                    style="width: 100px; height: 100px; object-fit: cover;">
+            <div>
+                <h4 th:text="${user.fullName != null} ? ${user.fullName} : 'Chưa có tên'">Tên người dùng</h4>
+                <p class="text-muted mb-0" th:text="${user.email != null} ? ${user.email} : 'Chưa có email'">Email</p>
+            </div>
+        </div>
+        <div class="mb-2">
+            <strong>Địa chỉ: </strong>
+            <span th:text="${user.address != null} ? ${user.address} : 'Chưa có địa chỉ'"></span>
+        </div>
+        <div class="mb-2">
+            <strong>Số điện thoại: </strong>
+            <span th:text="${user.phone != null} ? ${user.phone} : 'Chưa có số điện thoại'"></span>
+        </div>
+        <div class="mb-2">
+            <strong>Quyền hạn: </strong>
+            <span th:text="${user.role != null && user.role.name != null} ? ${user.role.name} : 'Chưa có quyền'"></span>
+        </div>
+        <div class="text-end mt-4">
+            <a th:href="@{/profile/edit}" class="btn btn-primary">Chỉnh sửa</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
