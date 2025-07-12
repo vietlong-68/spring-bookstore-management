@@ -79,4 +79,8 @@ public class CartService {
         }
         return totalAmount;
     }
+
+    public void deleteCart(Cart cart) {
+        cartRepository.delete(cart);
+    }
 }

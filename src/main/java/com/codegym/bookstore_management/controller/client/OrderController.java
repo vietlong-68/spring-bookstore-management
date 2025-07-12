@@ -6,9 +6,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.codegym.bookstore_management.model.Order;
+import com.codegym.bookstore_management.model.OrderDetail;
 import com.codegym.bookstore_management.model.User;
 import com.codegym.bookstore_management.model.UserS;
 import com.codegym.bookstore_management.service.SomethingConverter;
@@ -17,6 +19,8 @@ import com.codegym.bookstore_management.service.CartService;
 import com.codegym.bookstore_management.model.Cart;
 import com.codegym.bookstore_management.model.CartDetail;
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class OrderController {
@@ -39,7 +43,6 @@ public class OrderController {
         }
         User user = somethingConverter.userStoUser(userS);
         Order order = new Order();
-        order.setUser(user);
         order.setReceiverAddress(user.getAddress());
         order.setReceiverPhone(user.getPhone());
         order.setReceiverName(user.getFullName());
@@ -52,4 +55,18 @@ public class OrderController {
         model.addAttribute("order", order);
         return "client/order/form";
     }
+
+    @PostMapping("/order/save")
+    public String saveOrder(@ModelAttribute Order order, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserS userS = (UserS) session.getAttribute("currentUser");
+        User user = somethingConverter.userStoUser(userS);
+
+        Cart cart = cartService.findByUser(user);
+
+        orderService.handleOrder(cart, order.getReceiverAddress(), order.getReceiverPhone(), order.getReceiverName());
+
+        return "client/order/payment-success";
+    }
+
 }
