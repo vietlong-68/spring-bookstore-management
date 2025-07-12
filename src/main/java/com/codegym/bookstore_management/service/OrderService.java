@@ -11,6 +11,7 @@ import com.codegym.bookstore_management.model.CartDetail;
 import com.codegym.bookstore_management.model.Order;
 import com.codegym.bookstore_management.model.OrderDetail;
 import com.codegym.bookstore_management.model.Product;
+import com.codegym.bookstore_management.model.User;
 import com.codegym.bookstore_management.repository.OrderDetailRepository;
 import com.codegym.bookstore_management.repository.OrderRepository;
 
@@ -58,6 +59,10 @@ public class OrderService {
         order.setOrderDetails(orderDetails);
         orderRepository.save(order);
         cartService.deleteCart(cart);
+    }
+
+    public List<Order> findOrderByUser(User user) {
+        return orderRepository.findByUser(user);
     }
 
 }
