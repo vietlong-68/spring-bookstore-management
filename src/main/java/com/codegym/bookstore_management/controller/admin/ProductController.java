@@ -67,12 +67,6 @@ public class ProductController {
         return "admin/product/form";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateProduct(@PathVariable Long id, @ModelAttribute("product") Product product) {
-        productService.save(product);
-        return "redirect:/admin/products";
-    }
-
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
         productService.deleteById(id);

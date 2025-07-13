@@ -13,8 +13,8 @@
     <div class="container mt-5">
         <h2 class="mb-4">Chỉnh sửa hồ sơ</h2>
 
-        <form th:action="@{/profile/update}" method="post" th:object="${user}" enctype="multipart/form-data">
-
+        <form th:action="@{/admin/users/save}" method="post" th:object="${user}" enctype="multipart/form-data">
+            <input type="hidden" th:field="*{id}"/>
             <div class="mb-3">
                 <label for="email" class="form-label">Email:</label>
                 <input type="email" th:field="*{email}" id="email" class="form-control"
@@ -23,7 +23,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label">Mật khẩu mới (để trống nếu không đổi):</label>
+                <label for="password" class="form-label">Mật khẩu mới</label>
                 <input type="password" th:field="*{password}" id="password" class="form-control"
                     th:classappend="${#fields.hasErrors('password')}? 'is-invalid'">
                 <div class="invalid-feedback" th:errors="*{password}"></div>
@@ -64,6 +64,14 @@
             <div class="mb-3" style="display:none;" id="avatarPreviewWrapper">
                 <label class="form-label">Ảnh mới chọn:</label><br>
                 <img id="avatarPreviewNew" style="max-height: 150px;">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Vai trò</label>
+                <select class="form-select" th:field="*{role.id}" required>
+                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                </select>
+                <div class="text-danger" th:errors="*{role.id}"></div>
             </div>
 
             <button type="submit" class="btn btn-primary">Cập nhật</button>
