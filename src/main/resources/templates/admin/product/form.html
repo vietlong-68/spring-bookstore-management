@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    <div th:replace="admin/fragments/admin :: admin-sidebar"></div>
+    <div th:replace="admin/fragments/admin :: admin-navbar"></div>
 
     <div class="container mt-4">
         <h2 th:text="${product.id == null} ? 'Thêm sản phẩm' : 'Sửa sản phẩm'"></h2>

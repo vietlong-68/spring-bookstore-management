@@ -2,93 +2,60 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
-    <div th:fragment="admin-sidebar">
-        <div class="d-none d-lg-block bg-dark text-white position-fixed vh-100"
-            style="width: 250px; top: 0; left: 0; z-index: 1030;">
-            <div class="p-3">
-                <h5 class="text-bg-danger text-center py-2 px-4 mb-4 border-bottom pb-2">QUẢN TRỊ VIÊN</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2">
-                        <a class="nav-link text-white-50 hover-white" th:href="@{/}">
-                            <i class="bi bi-shop me-2"></i>Cửa hàng
-                        </a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link text-white-50 hover-white" th:href="@{/admin/dashboard}">
-                            <i class="bi bi-speedometer2 me-2"></i>Trang chủ quản trị
-                        </a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link text-white-50 hover-white" th:href="@{/admin/users}">
-                            <i class="bi bi-people me-2"></i>Quản lý người dùng
-                        </a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link text-white-50 hover-white" th:href="@{/admin/products}">
-                            <i class="bi bi-box me-2"></i>Quản lý sản phẩm
-                        </a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link text-white-50 hover-white" th:href="@{/admin/orders}">
-                            <i class="bi bi-cart me-2"></i>Quản lý đơn hàng
-                        </a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link text-danger fw-bold hover-white" th:href="@{/logout}">
-                            <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-lg-none">
+    <div th:fragment="admin-navbar">
+        <div style="height: 5rem;"></div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top py-3">
             <div class="container-fluid">
-                <a class="navbar-brand text-danger text-center py-2 px-4" th:href="@{/admin/dashboard}">QUẢN TRỊ
-                    VIÊN</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin"
-                    aria-controls="navbarAdmin" aria-expanded="false" aria-label="Chuyển đổi menu">
+                <a class="navbar-brand text-danger py-2 px-4 fs-4" th:href="@{/admin/dashboard}">QUẢN TRỊ VIÊN</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarAdmin">
+
+                <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item mb-2">
-                            <a class="nav-link text-white-50 hover-white" th:href="@{/}">
+                        <li class="nav-item me-lg-4">
+                            <a class="nav-link text-white-50 fw-bold hover-white fs-5" th:href="@{/}">
                                 <i class="bi bi-shop me-2"></i>Cửa hàng
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/admin/dashboard}">
-                                <i class="bi bi-speedometer2 me-1"></i>Trang chủ quản trị
+                    </ul>
+
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white-50 hover-white fs-5" href="#"
+                                id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-speedometer2 me-2"></i>Quản lý
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/admin/users}">
-                                <i class="bi bi-people me-1"></i>Quản lý người dùng
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/admin/products}">
-                                <i class="bi bi-box me-1"></i>Quản lý sản phẩm
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/admin/orders}">
-                                <i class="bi bi-cart me-1"></i>Quản lý đơn hàng
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-danger fw-bold" th:href="@{/logout}">
-                                <i class="bi bi-box-arrow-right me-1"></i>Đăng xuất
-                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end"
+                                aria-labelledby="adminDropdown">
+                                <li><a class="dropdown-item text-white-50 hover-white fs-5 py-3"
+                                        th:href="@{/admin/dashboard}">Trang chủ quản trị</a></li>
+                                <li><a class="dropdown-item text-white-50 hover-white fs-5 py-3"
+                                        th:href="@{/admin/users}">Quản lý người dùng</a></li>
+                                <li><a class="dropdown-item text-white-50 hover-white fs-5 py-3"
+                                        th:href="@{/admin/products}">Quản lý sản phẩm</a></li>
+                                <li><a class="dropdown-item text-white-50 hover-white fs-5 py-3"
+                                        th:href="@{/admin/orders}">Quản lý đơn hàng</a></li>
+
+                                <li>
+                                    <hr class="dropdown-divider bg-secondary">
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item text-danger fw-bold hover-white fs-5 py-3"
+                                        th:href="@{/logout}">
+                                        <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <div class="d-lg-none" style="margin-top: 56px;">
-        </div>
-        <div class="d-none d-lg-block" style="margin-left: 250px;">
-        </div>
+        <div style="height: 60px;"></div>
     </div>
 </body>
 

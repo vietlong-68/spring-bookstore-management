@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div th:replace="admin/fragments/admin :: admin-sidebar"></div>
+    <div th:replace="admin/fragments/admin :: admin-navbar"></div>
 
     <div class="container mt-4">
         <h2 class="mb-4">Danh sách đơn hàng</h2>
@@ -66,8 +66,6 @@
                             <a th:href="@{'/admin/orders/detail/' + ${order.id}}" class="btn btn-info btn-sm">Chi
                                 tiết</a>
                             <a th:href="@{'/admin/orders/edit/' + ${order.id}}" class="btn btn-warning btn-sm">Sửa</a>
-                            <a th:href="@{'/admin/orders/delete/' + ${order.id}}" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Xác nhận xóa?')">Xóa</a>
                         </div>
                         <span th:unless="${order != null and order.id != null}">Không có hành động</span>
                     </td>
