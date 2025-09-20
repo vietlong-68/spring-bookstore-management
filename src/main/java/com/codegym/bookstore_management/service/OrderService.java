@@ -78,4 +78,39 @@ public class OrderService {
         return orderRepository.findById(id);
     }
 
+    public Long getTotalOrders() {
+        return orderRepository.count();
+    }
+
+    public Double getTotalRevenue() {
+        List<Order> orders = orderRepository.findAll();
+        Double total = 0.0;
+        for (Order order : orders) {
+            total += order.getTotalPrice();
+        }
+        return total;
+    }
+
+    public Long getPendingOrdersCount() {
+        List<Order> orders = orderRepository.findAll();
+        Long count = 0L;
+        for (Order order : orders) {
+            if ("PENDING".equals(order.getStatus())) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public Long getCompletedOrdersCount() {
+        List<Order> orders = orderRepository.findAll();
+        Long count = 0L;
+        for (Order order : orders) {
+            if ("COMPLETED".equals(order.getStatus())) {
+                count++;
+            }
+        }
+        return count;
+    }
+
 }

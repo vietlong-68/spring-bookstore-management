@@ -4,7 +4,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 
 import com.codegym.bookstore_management.service.UserService;
 
@@ -30,14 +29,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         boolean accountNonLocked = true;
         boolean enabled = true;
 
-        UserDetails sUser = User.builder()
+        UserDetails userDetails = User.builder()
                 .username(email)
                 .password(password)
                 .roles(roleName)
                 .accountLocked(!accountNonLocked)
                 .disabled(!enabled)
                 .build();
-        return sUser;
+        return userDetails;
     }
 
 }
