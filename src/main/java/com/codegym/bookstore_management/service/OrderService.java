@@ -44,6 +44,14 @@ public class OrderService {
     }
 
     public void handleOrder(Cart cart, String receiverAddress, String receiverPhone, String receiverName) {
+        for (CartDetail cartDetail : cart.getCartDetails()) {
+            Product product = productService.findById(cartDetail.getProductId());
+            if (product.getQuantity() < cartDetail.getQuantity()) {
+                throw new RuntimeException("Sản phẩm '" + product.getName() + "' không đủ số lượng trong kho. Còn lại: "
+                        + product.getQuantity());
+            }
+        }
+
         Order order = new Order();
         order.setReceiverAddress(receiverAddress);
         order.setReceiverPhone(receiverPhone);
@@ -52,6 +60,7 @@ public class OrderService {
         order.setUser(cart.getUser());
         order.setStatus("PENDING");
         List<OrderDetail> orderDetails = new ArrayList<>();
+
         for (CartDetail cartDetail : cart.getCartDetails()) {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrder(order);
@@ -60,7 +69,11 @@ public class OrderService {
             orderDetail.setQuantity(cartDetail.getQuantity());
             orderDetail.setPrice(product.getPrice());
             orderDetails.add(orderDetail);
+
+            product.setQuantity(product.getQuantity() - cartDetail.getQuantity());
+            productService.save(product);
         }
+
         order.setOrderDetails(orderDetails);
         orderRepository.save(order);
         cartService.deleteCart(cart);

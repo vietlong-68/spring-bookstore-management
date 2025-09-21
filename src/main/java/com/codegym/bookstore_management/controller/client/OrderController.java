@@ -57,16 +57,22 @@ public class OrderController {
     }
 
     @PostMapping("/order/save")
-    public String saveOrder(@ModelAttribute Order order, HttpServletRequest request) {
+    public String saveOrder(@ModelAttribute Order order, HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         UserS userS = (UserS) session.getAttribute("currentUser");
         User user = somethingConverter.userStoUser(userS);
 
         Cart cart = cartService.findByUser(user);
 
-        orderService.handleOrder(cart, order.getReceiverAddress(), order.getReceiverPhone(), order.getReceiverName());
-
-        return "client/order/payment-success";
+        try {
+            orderService.handleOrder(cart, order.getReceiverAddress(), order.getReceiverPhone(),
+                    order.getReceiverName());
+            return "client/order/payment-success";
+        } catch (RuntimeException e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("order", order);
+            return "client/order/form";
+        }
     }
 
 }
